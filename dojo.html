@@ -1421,7 +1421,11 @@ Rel(d, p, "図コード送信")
 </main>
 </div><!-- /.layout -->
 
-<!-- ===== CHARGE MODAL — Stripe / Card Only ===== -->
+<!-- ===== CHARGE MODAL 削除済み（5〜7月モニタリング期間：メール誘導のみ） ===== -->
+
+
+
+
 
 <script>
   function setLang(lang) {
@@ -1527,6 +1531,12 @@ Rel(d, p, "図コード送信")
   const ANALYSIS_COST = 10; // 1回の分析コスト
 
   function updateCreditUI() {
+    // ── バージョンチェック：古いLocalStorageを自動リセット ──
+    if (localStorage.getItem('dojo-version') !== 'v2') {
+      localStorage.setItem('dojo-credits', '100');
+      localStorage.setItem('dojo-version', 'v2');
+      localStorage.removeItem('dojo-credits-used');
+    }
     let credits = parseInt(localStorage.getItem('dojo-credits'));
     if (isNaN(credits)) {
       credits = 100; // 初回無料体験付与（100クレジット）
@@ -1552,7 +1562,7 @@ Rel(d, p, "図コード送信")
       else if (credits <= 20)  barEl.classList.add('caution');
     }
     if (badge) {
-      if (credits === 50 && !localStorage.getItem('dojo-credits-used')) {
+      if (credits === 100 && !localStorage.getItem('dojo-credits-used')) {
         badge.style.display = '';
       } else {
         badge.style.display = 'none';
@@ -1567,20 +1577,23 @@ Rel(d, p, "図コード送信")
       btn.classList.add('credit-blocked');
       btn.textContent = '→ クレジットが不足しています';
       const hint = document.getElementById('scoreHint');
-      if (hint) hint.innerHTML = '<span style="color:#ffddaa;">⚠️ クレジットが不足しているため分析を開始できません。「＋ チャージ」からクレジットを補充してください。</span>';
+      if (hint) hint.innerHTML = '<span style="color:#ffddaa;">⚠️ 無料体験クレジット（100Cr）を使い切りました。引き続きご利用の場合は <a href="mailto:info@c4model.org" style="color:#F1C40F;">info@c4model.org</a> までご連絡ください。</span>';
     } else if (btn) {
       btn.classList.remove('credit-blocked');
       btn.textContent = '→ 分析開始（−10 Cr）';
     }
   }
 
-  /* ===== CHARGE MODAL（5〜7月モニタリング期間仕様） ===== */
+  /* ===== CHARGE MODAL（5〜7月モニタリング期間：メール誘導のみ）===== */
   function openChargeModal() {
     const hint = document.getElementById('scoreHint');
     if (hint) {
       hint.innerHTML = '<span style="color:#ffddaa;">⚠️ 無料体験クレジット（100Cr）を使い切りました。引き続きご利用の場合は <a href="mailto:info@c4model.org" style="color:#F1C40F;">info@c4model.org</a> までご連絡ください。</span>';
     }
   }
+
+  function selectPlan(el) {}
+  function doCharge() {}
 
   /* ===== アンケート送信（mailto） ===== */
   function submitFeedback() {
@@ -1609,6 +1622,25 @@ Rel(d, p, "図コード送信")
       `https://tnavi.github.io/ronbun-dojo/dojo.html`
     );
     window.location.href = `mailto:info@c4model.org?subject=${subject}&body=${body}`;
+  }
+
+  function selectPlan(el) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function doCharge() {
+    // モック：Stripe Checkoutへ遷移する想定。ここではデモ用にクレジット追加
+    const selected = document.querySelector('.plan-card.selected');
+    const cr = selected ? parseInt(selected.dataset.credits || '50') : 50;
+    let credits = parseInt(localStorage.getItem('dojo-credits') || '0');
+    credits = Math.min(credits + cr, 200);
+    localStorage.setItem('dojo-credits', credits);
+    localStorage.setItem('dojo-credits-used', '1');
+    updateCreditUI();
+    closeChargeModal();
+    // calcScore を再実行してボタン状態を更新
+    calcScore();
+    alert(`✅ ${cr}クレジットをチャージしました。残高：${credits} Cr`);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -1793,7 +1825,7 @@ ${get('references') || '（未入力）'}
       hint.innerHTML = '<strong>📄 AI分析結果</strong><br><pre style="white-space:pre-wrap; font-family:inherit; font-size:0.85rem; margin-top:0.5rem;">' + text + '</pre>';
       btn.disabled   = false;
       btn.textContent = '→ 分析完了';
-      // C4図も描画（PlantUMLエリアが空の場合は描画しない）
+      // C4図も描画
       const pumlCode = document.getElementById('pumlCode')?.value?.trim() || '';
       if (pumlCode) renderPuml();
     })
