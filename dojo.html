@@ -1130,7 +1130,7 @@
         <label><input type="radio" name="q_a" value="4"> 4. 悪い</label>
         <label><input type="radio" name="q_a" value="5"> 5. 非常に悪い</label>
       </div>
-      <textarea rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
+      <textarea id="qa_comment" rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
     </div>
 
     <div class="form-section">
@@ -1142,7 +1142,7 @@
         <label><input type="radio" name="q_b" value="4"> 4. 悪い</label>
         <label><input type="radio" name="q_b" value="5"> 5. 非常に悪い</label>
       </div>
-      <textarea rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
+      <textarea id="qb_comment" rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
     </div>
 
     <div class="form-section">
@@ -1154,7 +1154,7 @@
         <label><input type="radio" name="q_c" value="4"> 4. 悪い</label>
         <label><input type="radio" name="q_c" value="5"> 5. 非常に悪い</label>
       </div>
-      <textarea rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
+      <textarea id="qc_comment" rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
     </div>
 
     <div class="form-section">
@@ -1166,7 +1166,7 @@
         <label><input type="radio" name="q_d" value="4"> 4. 悪い</label>
         <label><input type="radio" name="q_d" value="5"> 5. 非常に悪い</label>
       </div>
-      <textarea rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
+      <textarea id="qd_comment" rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
     </div>
 
     <div class="form-section">
@@ -1178,10 +1178,16 @@
         <label><input type="radio" name="q_e" value="4"> 4. 悪い</label>
         <label><input type="radio" name="q_e" value="5"> 5. 非常に悪い</label>
       </div>
-      <textarea rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
+      <textarea id="qe_comment" rows="2" placeholder="改良点をお書きください（任意）" style="margin-top:0.75rem;"></textarea>
     </div>
 
-    <button class="btn-primary" style="font-size:1rem; padding:0.7rem 1.8rem;">📤 アンケートを送信する</button>
+    <div style="margin-top:1.5rem; padding:1rem; background:#f0f7fb; border-radius:8px; border-left:4px solid #2A6080;">
+      <p style="font-size:0.88rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
+        📬 「送信」を押すと、回答内容がメールアプリで <strong>info@c4model.org</strong> 宛に自動作成されます。<br>
+        未回答の項目があっても送信できます。ご協力ありがとうございます。
+      </p>
+      <button class="btn-primary" style="font-size:1rem; padding:0.7rem 1.8rem;" onclick="submitFeedback()">📤 アンケートを送信する</button>
+    </div>
   </section>
 
   <!-- TOOLS: C4モデル図集 -->
@@ -1365,21 +1371,39 @@ Rel(d, p, "図コード送信")
       </div>
     </div>
 
-    <div class="settings-card" id="settings-apikey">
-      <h3>🔑 Claude APIキー設定</h3>
-      <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.6;">
-        Anthropic APIキーを入力してください。キーはブラウザの <code>localStorage</code> にのみ保存され、外部サーバーには送信されません。<br>
-        ※ APIキーは <a href="https://console.anthropic.com/" target="_blank" style="color:var(--teal);">console.anthropic.com</a> で取得できます。
+    <!-- モニター参加者向け APIキー設定 -->
+    <div class="settings-card" id="settings-apikey" style="border-left:4px solid #8B7355; background:#fdf8f2;">
+      <h3>🔑 モニター参加者の方へ — APIキー設定</h3>
+      <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
+        招待メールに記載の <strong>APIキー（sk-ant-で始まる文字列）</strong> を入力して「保存」を押してください。<br>
+        キーはこのブラウザにのみ保存され、外部には送信されません。<strong>一度設定すれば次回以降は不要です。</strong>
       </p>
       <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
         <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off"
           style="flex:1; min-width:220px; padding:0.55rem 0.9rem; font-family:monospace; font-size:0.85rem;
-                 border:1px solid var(--border-color,#C5B99A); background:#fff; border-radius:4px;"
+                 border:1px solid #C5B99A; background:#fff; border-radius:4px;"
           oninput="updateApiKeyStatus()">
         <button class="btn-ghost" onclick="saveApiKey()" style="white-space:nowrap;">💾 保存</button>
         <button class="btn-ghost" onclick="clearApiKey()" style="white-space:nowrap; color:#c0392b;">🗑 削除</button>
       </div>
       <div id="apiKeyStatus" style="font-size:0.8rem; margin-top:0.5rem; color:var(--main-muted);"></div>
+    </div>
+
+    <div class="settings-card" style="border-left:4px solid #2A6080; background:linear-gradient(135deg,#f0f7fb 0%,#e8f4f0 100%);">
+      <h3>🎁 特別研究モニター枠（キャンペーン実施中）</h3>
+      <p style="font-size:0.9rem; line-height:1.8; color:var(--main-body);">
+        現在、<strong>初期モニタリング期間（〜2026年7月末）</strong>として、
+        論文執筆支援AIを <strong>100クレジット（約10回の分析）無料</strong> でご利用いただけます。
+      </p>
+      <p style="font-size:0.9rem; line-height:1.8; margin-top:0.75rem; color:var(--main-body);">
+        📅 <strong>キャンペーン期間終了後のご案内</strong><br>
+        期間終了前に、AI分析サービスの継続ご利用方法（APIキーのご提供など）について、
+        <strong>ご登録者様へメールにてご連絡</strong>いたします。
+      </p>
+      <p style="font-size:0.82rem; margin-top:0.75rem; color:var(--main-muted); border-top:1px solid #C5B99A; padding-top:0.6rem;">
+        ※ 現在のクレジットは無料体験用です。残量0になっても<strong>自動引き落としは一切ありません</strong>。<br>
+        ※ ご意見・ご要望は <a href="mailto:info@c4model.org" style="color:var(--teal);">info@c4model.org</a> までお寄せください。
+      </p>
     </div>
 
     <div class="settings-card">
@@ -1471,6 +1495,72 @@ Rel(d, p, "図コード送信")
   </div>
 </div>
 
+
+<!-- ===== ZERO CREDITS MODAL — 継続利用申請 ===== -->
+<div class="modal-overlay" id="zeroCreditsModal" onclick="if(event.target===this)closeZeroModal()">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-header">
+      <div class="modal-header-inner">
+        <span class="modal-header-title">🎁 無料体験クレジットを使い切りました</span>
+        <span class="modal-header-sub">THESIS DOJO — Service Continuation</span>
+      </div>
+      <button class="modal-close" onclick="closeZeroModal()" title="閉じる">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p style="font-size:0.9rem; line-height:1.8; margin-bottom:1rem; color:var(--main-body);">
+        初期モニタリング期間の <strong>100クレジット無料体験</strong> をご利用いただきありがとうございました。<br>
+        引き続きAI論文分析をご利用になる場合は、下記よりお申し込みください。
+      </p>
+
+      <!-- STEP 1: メール申請 -->
+      <div style="background:#f0f7fb; border-left:4px solid #2A6080; border-radius:6px; padding:1rem; margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.6rem;">📧 STEP 1 — APIキーをメールで申請する</div>
+        <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
+          お名前とメールアドレスを入力して「申請メールを送る」を押すと、<br>
+          <strong>info@c4model.org</strong> 宛に申請メールが自動作成されます。<br>
+          確認後、<strong>1〜2営業日以内にAPIキーをご返信</strong>いたします。
+        </p>
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <input type="text" id="applyName" placeholder="お名前（例：奥村 治）"
+            style="padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px; font-size:0.88rem;">
+          <input type="email" id="applyEmail" placeholder="メールアドレス（例：info@c4model.org）"
+            style="padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px; font-size:0.88rem;">
+          <button onclick="sendApiKeyRequest()"
+            style="background:#2A6080; color:#fff; border:none; border-radius:6px; padding:0.65rem 1rem;
+                   font-size:0.9rem; font-weight:700; cursor:pointer; margin-top:0.25rem;">
+            📨 申請メールを送る
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: APIキー入力 -->
+      <div style="background:#f5f5f0; border-left:4px solid #8B7355; border-radius:6px; padding:1rem;">
+        <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.6rem;">🔑 STEP 2 — APIキーをお持ちの方はこちらへ入力</div>
+        <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
+          メールで受け取ったAPIキーを入力して「保存して続ける」を押すと、<br>
+          すぐにAI分析を再開できます。
+        </p>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <input type="password" id="zeroModalApiKey" placeholder="sk-ant-..."
+            style="flex:1; padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px;
+                   font-family:monospace; font-size:0.85rem;">
+          <button onclick="saveApiKeyFromModal()"
+            style="background:#5A4030; color:#fff; border:none; border-radius:6px; padding:0.65rem 0.9rem;
+                   font-size:0.88rem; font-weight:700; cursor:pointer; white-space:nowrap;">
+            💾 保存して続ける
+          </button>
+        </div>
+        <div id="zeroModalStatus" style="font-size:0.8rem; margin-top:0.4rem; color:var(--main-muted);"></div>
+      </div>
+
+      <div class="modal-zero-stop" style="margin-top:1rem;">
+        <span style="font-size:1rem;flex-shrink:0;">🛡️</span>
+        <span><strong>ゼロストップ保証：</strong>残高0になっても自動引き落とし・自動更新は一切されません。</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   function setLang(lang) {
@@ -1625,11 +1715,93 @@ Rel(d, p, "図コード送信")
 
   /* ===== CHARGE MODAL ===== */
   function openChargeModal() {
-    document.getElementById('chargeModal').classList.add('open');
+    const credits = parseInt(localStorage.getItem('dojo-credits') || '0');
+    if (credits <= 0) {
+      openZeroModal(); // クレジット0時は継続申請モーダルへ
+    } else {
+      document.getElementById('chargeModal').classList.add('open');
+    }
   }
   function closeChargeModal() {
     document.getElementById('chargeModal').classList.remove('open');
   }
+
+  /* ===== ZERO CREDITS MODAL ===== */
+  function openZeroModal() {
+    document.getElementById('zeroCreditsModal').classList.add('open');
+  }
+  function closeZeroModal() {
+    document.getElementById('zeroCreditsModal').classList.remove('open');
+  }
+
+  // STEP 1: メールでAPIキー申請
+  function sendApiKeyRequest() {
+    const name  = (document.getElementById('applyName')?.value  || '').trim();
+    const email = (document.getElementById('applyEmail')?.value || '').trim();
+    if (!email) {
+      alert('メールアドレスを入力してください。');
+      return;
+    }
+    const subject = encodeURIComponent('【論文道場】APIキー利用申請');
+    const body = encodeURIComponent(
+      `論文道場 AI分析機能の継続利用を希望します。\n\n` +
+      `お名前: ${name || '（未入力）'}\n` +
+      `メールアドレス: ${email}\n\n` +
+      `---\n` +
+      `送信元: 論文道場 Academic Paper Dojo\n` +
+      `https://tnavi.github.io/ronbun-dojo/dojo.html`
+    );
+    window.location.href = `mailto:info@c4model.org?subject=${subject}&body=${body}`;
+  }
+
+  // STEP 2: モーダルからAPIキーを保存して分析を再開
+  function saveApiKeyFromModal() {
+    const key    = (document.getElementById('zeroModalApiKey')?.value || '').trim();
+    const status = document.getElementById('zeroModalStatus');
+    if (!key || !key.startsWith('sk-ant-')) {
+      if (status) status.innerHTML = '<span style="color:#c0392b;">⚠️ 有効なAPIキー（sk-ant-で始まる）を入力してください。</span>';
+      return;
+    }
+    localStorage.setItem('dojo-api-key', key);
+    // クレジットを100に回復
+    localStorage.setItem('dojo-credits', '100');
+    localStorage.removeItem('dojo-credits-used');
+    updateCreditUI();
+    calcScore();
+    closeZeroModal();
+    if (status) status.innerHTML = '';
+    alert('✅ APIキーを保存し、クレジットを100に回復しました。\nAI分析を再開できます。');
+  }
+
+  /* ===== アンケート送信（mailto） ===== */
+  function submitFeedback() {
+    const radio = name => {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value + '点' : '未回答';
+    };
+    const txt = id => (document.getElementById(id)?.value || '').trim() || '（なし）';
+
+    const author = document.getElementById('authorName')?.value || '（未入力）';
+    const score  = document.getElementById('scoreNum')?.textContent || '?';
+    const date   = new Date().toLocaleDateString('ja-JP');
+
+    const subject = encodeURIComponent(`【論文道場アンケート】${author} — ${date}`);
+    const body = encodeURIComponent(
+      `■ 論文道場 評価アンケート（Ver 1.0 実証用）\n` +
+      `送信日：${date}\n` +
+      `著者名：${author}\n` +
+      `論文スコア：${score}/30点\n\n` +
+      `A. みやすさ：${radio('q_a')}\n　コメント：${txt('qa_comment')}\n\n` +
+      `B. 解説のわかりやすさ：${radio('q_b')}\n　コメント：${txt('qb_comment')}\n\n` +
+      `C. 操作方法：${radio('q_c')}\n　コメント：${txt('qc_comment')}\n\n` +
+      `D. 出力結果：${radio('q_d')}\n　コメント：${txt('qd_comment')}\n\n` +
+      `E. 全体評価：${radio('q_e')}\n　コメント：${txt('qe_comment')}\n\n` +
+      `---\n送信元：論文道場 Academic Paper Dojo\n` +
+      `https://tnavi.github.io/ronbun-dojo/dojo.html`
+    );
+    window.location.href = `mailto:info@c4model.org?subject=${subject}&body=${body}`;
+  }
+
   function selectPlan(el) {
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
@@ -1786,22 +1958,13 @@ ${get('references') || '（未入力）'}
       ? window.SkillsFilter.buildSystemPrompt(['L0', 'L1', 'L2', 'L3'])
       : 'あなたはC4モデル研究会の学術AIアシスタントです。すべての出力はUTF-8で生成し、PlantUMLコードには skinparam defaultFontName "Noto Sans CJK JP" を必ず含めてください。';
 
-    // APIキーをlocalStorageから取得（なければダイアログで入力）
-    let apiKey = localStorage.getItem('dojo-api-key') || '';
+    // APIキーをlocalStorageから取得
+    const apiKey = localStorage.getItem('dojo-api-key') || '';
     if (!apiKey) {
-      const entered = window.prompt(
-        '🔑 Claude APIキーを入力してください。\n\nAnthropicコンソール（console.anthropic.com）のAPI Keysページで取得できます。\n\n（入力したキーはこのブラウザに保存されます）',
-        ''
-      );
-      if (!entered || !entered.trim()) {
-        hint.innerHTML = '<span style="color:#ffddaa;">⚠️ APIキーが入力されませんでした。もう一度「分析開始」を押してください。</span>';
-        btn.disabled   = false;
-        btn.textContent = '→ 分析開始（−10 Cr）';
-        return;
-      }
-      apiKey = entered.trim();
-      localStorage.setItem('dojo-api-key', apiKey);
-      hint.innerHTML = '✅ APIキーを保存しました。分析を開始します…';
+      hint.innerHTML = '<span style="color:#ffddaa;">⚠️ 現在、AI分析サービスは準備中です。しばらくお待ちください。</span>';
+      btn.disabled   = false;
+      btn.textContent = '→ 分析開始（−10 Cr）';
+      return;
     }
 
     fetch('https://api.anthropic.com/v1/messages', {
@@ -1819,7 +1982,14 @@ ${get('references') || '（未入力）'}
         messages: [{ role: 'user', content: prompt }]
       })
     })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) return r.json().then(e => Promise.reject(new Error(
+        r.status === 401 ? '❌ APIキーが無効です。設定から正しいキーを入力してください。' :
+        r.status === 429 ? '❌ API利用制限に達しました。しばらくお待ちください。' :
+        e.error?.message || `APIエラー (HTTP ${r.status})`
+      )));
+      return r.json();
+    })
     .then(data => {
       // クレジット消費ロジック
       credits -= ANALYSIS_COST;
@@ -1940,7 +2110,7 @@ Simon Brown (2018). The C4 Model for Software Architecture. InfoQ.
       .replace(/^\uFEFF/, '')         // BOM除去
       .replace(/[\uFFFD]/g, '?');     // 置換文字を ? に変換
     const compressed = pako.deflateRaw(new TextEncoder().encode(cleanCode));
-    return 'https://www.plantuml.com/plantuml/svg/~1' + _puml6b64(compressed);
+    return 'https://www.plantuml.com/plantuml/svg/' + _puml6b64(compressed);
   }
 
   function renderPuml() {
