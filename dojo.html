@@ -5,8 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>論文道場 — Academic Paper Dojo | c4model.org</title>
   <meta name="description" content="論文道場：C4モデル×AIで論文を構造化する学術執筆支援プラットフォーム。" />
+  <!-- CSP: api.anthropic.com / plantuml / cdnjs への接続を許可 -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src  'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+    style-src   'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src    'self' https://fonts.gstatic.com;
+    connect-src 'self' https://api.anthropic.com https://www.plantuml.com https://raw.githubusercontent.com;
+    img-src     * data: blob:;
+    frame-src   *;
+  " />
   <!-- pako 2.1.0: PlantUML Deflate Raw エンコードに必須 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+  <!-- Skills Filter v1.0: インライン埋め込み（外部ファイル不要・CSP対応） -->
+  <script>
+  (function(global){'use strict';
+  var SF_L0=['あなたは C4モデル研究会 の学術 AI アシスタントです。','以下の「出力品質文法（Skills Filter v1.0）」に従って、すべての出力を生成してください。','','[Rule 0: エンコーディング宣言（最重要）]','すべての出力は UTF-8 で生成すること。','BOM を絶対に含めないこと。','置換文字が出力に含まれた場合は、その箇所を「[文字不明]」に置換して出力すること。','ASCII 範囲外の文字（日本語・漢字・ひらがな・カタカナ）は、エスケープせずそのまま出力すること。','','[Rule 1: 日本語出力の必須規約]','・読点は「、」、句点は「。」を使用すること','・「.」（ピリオド）を句点として使わないこと','・カギ括弧は「」を使用すること','・半角カタカナ（ｱｲｳ等）を使わないこと。必ず全角カタカナを使用すること','','[Rule 2: 文字化けリスク語彙の禁止]','以下のパターンを出力に含めてはいけない：','・□□□ や ??? が連続する表現','・HTMLエンティティの不正使用','・コードブロック外でのエスケープシーケンス（\\uXXXX形式）','','[Rule 3: 自己校正義務]','出力前に以下を内部チェックすること：','1. 日本語テキストに全角文字が正しく含まれているか','2. PlantUML を生成した場合、skinparam defaultFontName が含まれているか','3. コードブロックの開閉が正しく対応しているか','不合格の場合は自動修正して出力すること。'].join('\n');
+  var SF_L1=['[PlantUML Rule 1: 必須ヘッダー]','すべての PlantUML コードは @startuml の直後に必ず以下を含めること：','','@startuml','skinparam defaultFontName "Noto Sans CJK JP"','skinparam defaultFontSize 13','skinparam backgroundColor #FAFAF8','skinparam ArrowColor #1A6B7A','skinparam BorderColor #5A5040','skinparam shadowing false','','[PlantUML Rule 2: ラベル文字列の規約]','Person(), System() 等のラベルに日本語を使用する場合、必ず "" で囲むこと。','正しい例：Person(user, "研究者", "論文執筆者")','','[PlantUML Rule 3: コードブロック禁止]','PlantUML コードを ``` で囲まないこと。@startuml から @enduml までをそのまま出力すること。','','[PlantUML Rule 5: C4 インクルードの固定 URL]','L1: !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml','L2: !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml','L3: !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml'].join('\n');
+  var SF_L2=['[Japanese Rule 1: 語彙の統一]','論文道場 / C4モデル / PlantUML / 俳句 / 文字化け / Claude API — 表記を統一すること','','[Japanese Rule 2: 数値・単位の表記]','・数字は半角アラビア数字：1, 2, 3','・単位は半角英字：100px, 1rem, 13pt','・パーセントは半角：80%','','[Japanese Rule 3: 敬体・常体の統一]','・UI説明文：です・ます調','・コード内コメント：だ・である調','・同一段落内で混在させないこと'].join('\n');
+  var SF_L3=['[自己校正アルゴリズム：出力確定前に必ず内部実行すること]','チェック1: PlantUML コードを含む場合','□ skinparam defaultFontName "Noto Sans CJK JP" が @startuml の直後にあるか','□ Person(), System() 等のラベルが "" で囲まれているか','□ コードが ``` で囲まれていないか','→ 不合格項目を自動修正してから出力すること','','チェック2: 日本語テキストを含む場合','□ 句読点が「、」「。」（全角）になっているか','□ 半角カタカナが含まれていないか','□ 置換文字（U+FFFD）が含まれていないか','→ 不合格項目を自動修正してから出力すること'].join('\n');
+  function buildSystemPrompt(levels){
+    levels=levels||['L0','L1','L2','L3'];
+    var map={L0:SF_L0,L1:SF_L1,L2:SF_L2,L3:SF_L3};
+    return levels.map(function(l){return map[l]||'';}).join('\n\n');
+  }
+  global.SkillsFilter={SF_L0:SF_L0,SF_L1:SF_L1,SF_L2:SF_L2,SF_L3:SF_L3,buildSystemPrompt:buildSystemPrompt};
+  })(window);
+  </script>
   <style>
     /* ===== RESET ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1340,6 +1365,23 @@ Rel(d, p, "図コード送信")
       </div>
     </div>
 
+    <div class="settings-card" id="settings-apikey">
+      <h3>🔑 Claude APIキー設定</h3>
+      <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.6;">
+        Anthropic APIキーを入力してください。キーはブラウザの <code>localStorage</code> にのみ保存され、外部サーバーには送信されません。<br>
+        ※ APIキーは <a href="https://console.anthropic.com/" target="_blank" style="color:var(--teal);">console.anthropic.com</a> で取得できます。
+      </p>
+      <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off"
+          style="flex:1; min-width:220px; padding:0.55rem 0.9rem; font-family:monospace; font-size:0.85rem;
+                 border:1px solid var(--border-color,#C5B99A); background:#fff; border-radius:4px;"
+          oninput="updateApiKeyStatus()">
+        <button class="btn-ghost" onclick="saveApiKey()" style="white-space:nowrap;">💾 保存</button>
+        <button class="btn-ghost" onclick="clearApiKey()" style="white-space:nowrap; color:#c0392b;">🗑 削除</button>
+      </div>
+      <div id="apiKeyStatus" style="font-size:0.8rem; margin-top:0.5rem; color:var(--main-muted);"></div>
+    </div>
+
     <div class="settings-card">
       <h3>ℹ️ このアプリについて</h3>
       <p style="font-size:0.9rem; color:var(--main-muted); line-height:1.8;">
@@ -1609,12 +1651,56 @@ Rel(d, p, "図コード送信")
 
   document.addEventListener('DOMContentLoaded', () => {
     updateCreditUI();
+    // APIキー初期表示
+    const saved = localStorage.getItem('dojo-api-key');
+    if (saved) {
+      const el = document.getElementById('apiKeyInput');
+      if (el) el.value = saved;
+      updateApiKeyStatus();
+    }
     document.querySelectorAll('input, textarea, select').forEach(el => {
       el.addEventListener('input', calcScore);
       el.addEventListener('change', calcScore);
     });
     calcScore();
   });
+
+  /* ===== API KEY MANAGEMENT ===== */
+  function saveApiKey() {
+    const el  = document.getElementById('apiKeyInput');
+    const key = el ? el.value.trim() : '';
+    if (!key) { alert('APIキーを入力してください。'); return; }
+    if (!key.startsWith('sk-ant-')) {
+      if (!confirm('入力されたキーが「sk-ant-」で始まっていません。このまま保存しますか？')) return;
+    }
+    localStorage.setItem('dojo-api-key', key);
+    updateApiKeyStatus();
+    alert('✅ APIキーを保存しました。分析開始ボタンをお試しください。');
+  }
+
+  function clearApiKey() {
+    if (!confirm('APIキーを削除しますか？')) return;
+    localStorage.removeItem('dojo-api-key');
+    const el = document.getElementById('apiKeyInput');
+    if (el) el.value = '';
+    updateApiKeyStatus();
+  }
+
+  function updateApiKeyStatus() {
+    const statusEl = document.getElementById('apiKeyStatus');
+    if (!statusEl) return;
+    const saved = localStorage.getItem('dojo-api-key');
+    const inputVal = (document.getElementById('apiKeyInput') || {}).value || '';
+    if (saved) {
+      const masked = saved.slice(0, 10) + '••••••••••••••' + saved.slice(-4);
+      statusEl.innerHTML = `✅ <span style="color:#2A6080; font-family:monospace;">${masked}</span> が保存済みです。`;
+    } else if (inputVal) {
+      statusEl.innerHTML = '⚠️ 未保存です。「💾 保存」を押してください。';
+    } else {
+      statusEl.innerHTML = '❌ APIキーが設定されていません。上の欄に入力して保存してください。';
+    }
+  }
+
 
   function updateCharCount(el, countId) {
     const span = document.getElementById(countId);
@@ -1692,24 +1778,35 @@ ${get('references') || '（未入力）'}
 4. C4モデル（L1〜L4）の各層への適用方法
 5. 参考文献充実のための検索キーワード提案
 
-【PlantUML図の生成ルール（必須）】
-PlantUMLコードを生成する際は、@startumlの直後に必ず以下のskinparamを付加してください：
-skinparam defaultFontName "Noto Sans CJK JP"
-skinparam defaultFontSize 13
-skinparam backgroundColor #FAFAF8
-skinparam ArrowColor #1A6B7A
-これを省略すると日本語が文字化けします。絶対に省略しないでください。
-また、@startumlと@endumlの間にのみコードを書き、コードブロック（\`\`\`）で囲まないでください。
-
 【システム指示】
 ユーザーは「ハイブリッド・クレジットシステム（従量制）」を利用しています。無駄なトークン消費を抑えるため、冗長な挨拶は省き、簡潔かつ最も価値のある構造的アドバイスを直接出力してください。`;
 
+    // Skills Filter v1.0: system フィールドで品質保証（L0+L1+L2+L3 全層適用）
+    const systemPrompt = (typeof window.SkillsFilter !== 'undefined')
+      ? window.SkillsFilter.buildSystemPrompt(['L0', 'L1', 'L2', 'L3'])
+      : 'あなたはC4モデル研究会の学術AIアシスタントです。すべての出力はUTF-8で生成し、PlantUMLコードには skinparam defaultFontName "Noto Sans CJK JP" を必ず含めてください。';
+
+    // APIキーをlocalStorageから取得（settings欄で設定）
+    const apiKey = localStorage.getItem('dojo-api-key') || '';
+    if (!apiKey) {
+      hint.innerHTML = '<span style="color:#ffddaa;">⚠️ Claude APIキーが設定されていません。<br>「設定」セクションの「APIキー入力欄」に Anthropic APIキーを入力してください。</span>';
+      btn.disabled   = false;
+      btn.textContent = '→ 分析開始（−10 Cr）';
+      return;
+    }
+
     fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
+        system: systemPrompt,
         messages: [{ role: 'user', content: prompt }]
       })
     })
