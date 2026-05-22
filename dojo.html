@@ -1786,13 +1786,22 @@ ${get('references') || '（未入力）'}
       ? window.SkillsFilter.buildSystemPrompt(['L0', 'L1', 'L2', 'L3'])
       : 'あなたはC4モデル研究会の学術AIアシスタントです。すべての出力はUTF-8で生成し、PlantUMLコードには skinparam defaultFontName "Noto Sans CJK JP" を必ず含めてください。';
 
-    // APIキーをlocalStorageから取得（settings欄で設定）
-    const apiKey = localStorage.getItem('dojo-api-key') || '';
+    // APIキーをlocalStorageから取得（なければダイアログで入力）
+    let apiKey = localStorage.getItem('dojo-api-key') || '';
     if (!apiKey) {
-      hint.innerHTML = '<span style="color:#ffddaa;">⚠️ Claude APIキーが設定されていません。<br>「設定」セクションの「APIキー入力欄」に Anthropic APIキーを入力してください。</span>';
-      btn.disabled   = false;
-      btn.textContent = '→ 分析開始（−10 Cr）';
-      return;
+      const entered = window.prompt(
+        '🔑 Claude APIキーを入力してください。\n\nAnthropicコンソール（console.anthropic.com）のAPI Keysページで取得できます。\n\n（入力したキーはこのブラウザに保存されます）',
+        ''
+      );
+      if (!entered || !entered.trim()) {
+        hint.innerHTML = '<span style="color:#ffddaa;">⚠️ APIキーが入力されませんでした。もう一度「分析開始」を押してください。</span>';
+        btn.disabled   = false;
+        btn.textContent = '→ 分析開始（−10 Cr）';
+        return;
+      }
+      apiKey = entered.trim();
+      localStorage.setItem('dojo-api-key', apiKey);
+      hint.innerHTML = '✅ APIキーを保存しました。分析を開始します…';
     }
 
     fetch('https://api.anthropic.com/v1/messages', {
