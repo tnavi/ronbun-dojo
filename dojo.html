@@ -1422,145 +1422,6 @@ Rel(d, p, "図コード送信")
 </div><!-- /.layout -->
 
 <!-- ===== CHARGE MODAL — Stripe / Card Only ===== -->
-<div class="modal-overlay" id="chargeModal" onclick="if(event.target===this)closeChargeModal()">
-  <div class="modal-box">
-    <!-- ヘッダー -->
-    <div class="modal-header">
-      <div class="modal-header-inner">
-        <span class="modal-header-title">クレジットをチャージ</span>
-        <span class="modal-header-sub">THESIS DOJO — Credit Purchase</span>
-      </div>
-      <button class="modal-close" onclick="closeChargeModal()" title="閉じる">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <!-- データ保護バナー -->
-      <div class="modal-data-safe">
-        <span class="icon">🔒</span>
-        <span><strong>入力中のデータはブラウザに自動保存されています。</strong>安心してお手続きください。チャージ後すぐに続きから作業できます。</span>
-      </div>
-
-      <!-- プラン選択 -->
-      <div class="modal-plans">
-        <div class="plan-card" data-credits="50" onclick="selectPlan(this)">
-          <div class="plan-credits">50<small> Cr</small></div>
-          <div class="plan-price">¥1,500</div>
-          <div class="plan-per">1 Cr ≈ ¥30</div>
-          <div class="plan-note">分析 5回分</div>
-        </div>
-        <div class="plan-card selected" data-credits="120" onclick="selectPlan(this)">
-          <div class="plan-badge">おすすめ</div>
-          <div class="plan-credits">120<small> Cr</small></div>
-          <div class="plan-price">¥3,000<small> /月</small></div>
-          <div class="plan-per">1 Cr ≈ ¥25（お得）</div>
-          <div class="plan-note">論文10本分の目安</div>
-        </div>
-      </div>
-
-      <!-- 決済セクション：Stripe / クレジットカードのみ -->
-      <div class="payment-section">
-        <div class="payment-label">お支払い方法</div>
-
-        <!-- Stripe Checkout ボタン（モック） -->
-        <button class="stripe-btn" onclick="doCharge()">
-          <span>カードで安全に支払う</span>
-          <span class="stripe-logo">
-            <svg width="36" height="15" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M27.5 10c0-2.8-1.4-5-4.3-5-2.9 0-4.7 2.2-4.7 5s1.7 5 4.7 5c2 0 3.2-.9 3.9-2.2l-1.9-.8c-.4.8-1.1 1.2-2 1.2-1.2 0-2-.7-2.2-2h6.5c0-.1 0-.1 0-.2zm-6.4-.9c.2-1.1.9-1.8 2-1.8s1.7.7 1.9 1.8h-3.9zm9.9-1.6c.5 0 1 .2 1.3.5l1.3-1.4c-.6-.6-1.6-1-2.6-1-2.1 0-3.6 1.1-3.6 2.9 0 3.4 4.6 2.2 4.6 3.8 0 .6-.5 1-1.4 1-.8 0-1.5-.4-1.9-1l-1.3 1.4c.7.9 1.8 1.4 3.2 1.4 2.2 0 3.7-1.1 3.7-2.9 0-3.5-4.6-2.3-4.6-3.8 0-.5.5-.9 1.3-.9zm5.9-3.7v1.9h-1.3v1.8h1.3V15h2.2V7.5h1.7V5.7h-1.7V4.8c0-.6.2-.9.8-.9.4 0 .7.1.9.3V2.5c-.4-.2-.9-.3-1.5-.3-1.7 0-2.4 1-2.4 2.6zm6.6 10.2V5.7h-2.2V15h2.2zm-1.1-10.5c.7 0 1.3-.6 1.3-1.3S43.1 1.9 42.4 1.9s-1.3.6-1.3 1.3.6 1.3 1.3 1.3zm7.5 0c-2.9 0-4.9 2.1-4.9 5s2 5 4.9 5 4.9-2.1 4.9-5-2-5-4.9-5zm0 8.1c-1.5 0-2.6-1.3-2.6-3.1s1.1-3.1 2.6-3.1 2.6 1.3 2.6 3.1-1.1 3.1-2.6 3.1zm8.4-7.9l-.1.8c-.5-.6-1.3-1-2.2-1-2.1 0-3.7 2-3.7 5s1.6 5 3.7 5c.9 0 1.7-.4 2.2-1l.1.8h2V5.7h-2zm-1.9 8c-1.2 0-2-1.1-2-3s.8-3 2-3 2 1.1 2 3-.8 3-2 3z" fill="white"/>
-            </svg>
-          </span>
-        </button>
-
-        <!-- 対応カードブランド（ロゴなしテキストのみ・ミニマル） -->
-        <div class="card-brands">
-          <span class="card-brand">VISA</span>
-          <span class="card-brand">Mastercard</span>
-          <span class="card-brand">Amex</span>
-          <span class="card-brand">JCB</span>
-          <span style="font-size:0.6rem;color:var(--main-muted);margin-left:0.25rem;">のみ対応</span>
-        </div>
-      </div>
-
-      <!-- ゼロストップ保証 -->
-      <div class="modal-zero-stop">
-        <span style="font-size:1rem;flex-shrink:0;line-height:1.6;">🛡️</span>
-        <span><strong>ゼロストップ保証：</strong>残高0になっても自動引き落とし・自動更新は一切されません。次回チャージは常に手動・任意です。</span>
-      </div>
-
-      <div class="modal-footer-note">
-        決済はStripeで安全に処理されます。カード番号はサーバーに保存されません。<br>
-        ※ PayPay等のローカル決済は非対応です。
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ===== ZERO CREDITS MODAL — 継続利用申請 ===== -->
-<div class="modal-overlay" id="zeroCreditsModal" onclick="if(event.target===this)closeZeroModal()">
-  <div class="modal-box" style="max-width:480px;">
-    <div class="modal-header">
-      <div class="modal-header-inner">
-        <span class="modal-header-title">🎁 無料体験クレジットを使い切りました</span>
-        <span class="modal-header-sub">THESIS DOJO — Service Continuation</span>
-      </div>
-      <button class="modal-close" onclick="closeZeroModal()" title="閉じる">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <p style="font-size:0.9rem; line-height:1.8; margin-bottom:1rem; color:var(--main-body);">
-        初期モニタリング期間の <strong>100クレジット無料体験</strong> をご利用いただきありがとうございました。<br>
-        引き続きAI論文分析をご利用になる場合は、下記よりお申し込みください。
-      </p>
-
-      <!-- STEP 1: メール申請 -->
-      <div style="background:#f0f7fb; border-left:4px solid #2A6080; border-radius:6px; padding:1rem; margin-bottom:1rem;">
-        <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.6rem;">📧 STEP 1 — APIキーをメールで申請する</div>
-        <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
-          お名前とメールアドレスを入力して「申請メールを送る」を押すと、<br>
-          <strong>info@c4model.org</strong> 宛に申請メールが自動作成されます。<br>
-          確認後、<strong>1〜2営業日以内にAPIキーをご返信</strong>いたします。
-        </p>
-        <div style="display:flex; flex-direction:column; gap:0.5rem;">
-          <input type="text" id="applyName" placeholder="お名前（例：奥村 治）"
-            style="padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px; font-size:0.88rem;">
-          <input type="email" id="applyEmail" placeholder="メールアドレス（例：info@c4model.org）"
-            style="padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px; font-size:0.88rem;">
-          <button onclick="sendApiKeyRequest()"
-            style="background:#2A6080; color:#fff; border:none; border-radius:6px; padding:0.65rem 1rem;
-                   font-size:0.9rem; font-weight:700; cursor:pointer; margin-top:0.25rem;">
-            📨 申請メールを送る
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP 2: APIキー入力 -->
-      <div style="background:#f5f5f0; border-left:4px solid #8B7355; border-radius:6px; padding:1rem;">
-        <div style="font-weight:700; font-size:0.9rem; margin-bottom:0.6rem;">🔑 STEP 2 — APIキーをお持ちの方はこちらへ入力</div>
-        <p style="font-size:0.85rem; color:var(--main-muted); margin-bottom:0.75rem; line-height:1.7;">
-          メールで受け取ったAPIキーを入力して「保存して続ける」を押すと、<br>
-          すぐにAI分析を再開できます。
-        </p>
-        <div style="display:flex; gap:0.5rem; align-items:center;">
-          <input type="password" id="zeroModalApiKey" placeholder="sk-ant-..."
-            style="flex:1; padding:0.5rem 0.75rem; border:1px solid #C5B99A; border-radius:4px;
-                   font-family:monospace; font-size:0.85rem;">
-          <button onclick="saveApiKeyFromModal()"
-            style="background:#5A4030; color:#fff; border:none; border-radius:6px; padding:0.65rem 0.9rem;
-                   font-size:0.88rem; font-weight:700; cursor:pointer; white-space:nowrap;">
-            💾 保存して続ける
-          </button>
-        </div>
-        <div id="zeroModalStatus" style="font-size:0.8rem; margin-top:0.4rem; color:var(--main-muted);"></div>
-      </div>
-
-      <div class="modal-zero-stop" style="margin-top:1rem;">
-        <span style="font-size:1rem;flex-shrink:0;">🛡️</span>
-        <span><strong>ゼロストップ保証：</strong>残高0になっても自動引き落とし・自動更新は一切されません。</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
   function setLang(lang) {
@@ -1668,7 +1529,7 @@ Rel(d, p, "図コード送信")
   function updateCreditUI() {
     let credits = parseInt(localStorage.getItem('dojo-credits'));
     if (isNaN(credits)) {
-      credits = 50; // 初回無料体験付与
+      credits = 100; // 初回無料体験付与（100クレジット）
       localStorage.setItem('dojo-credits', credits);
     }
     const TOTAL = 100;
@@ -1713,64 +1574,12 @@ Rel(d, p, "図コード送信")
     }
   }
 
-  /* ===== CHARGE MODAL ===== */
+  /* ===== CHARGE MODAL（5〜7月モニタリング期間仕様） ===== */
   function openChargeModal() {
-    const credits = parseInt(localStorage.getItem('dojo-credits') || '0');
-    if (credits <= 0) {
-      openZeroModal(); // クレジット0時は継続申請モーダルへ
-    } else {
-      document.getElementById('chargeModal').classList.add('open');
+    const hint = document.getElementById('scoreHint');
+    if (hint) {
+      hint.innerHTML = '<span style="color:#ffddaa;">⚠️ 無料体験クレジット（100Cr）を使い切りました。引き続きご利用の場合は <a href="mailto:info@c4model.org" style="color:#F1C40F;">info@c4model.org</a> までご連絡ください。</span>';
     }
-  }
-  function closeChargeModal() {
-    document.getElementById('chargeModal').classList.remove('open');
-  }
-
-  /* ===== ZERO CREDITS MODAL ===== */
-  function openZeroModal() {
-    document.getElementById('zeroCreditsModal').classList.add('open');
-  }
-  function closeZeroModal() {
-    document.getElementById('zeroCreditsModal').classList.remove('open');
-  }
-
-  // STEP 1: メールでAPIキー申請
-  function sendApiKeyRequest() {
-    const name  = (document.getElementById('applyName')?.value  || '').trim();
-    const email = (document.getElementById('applyEmail')?.value || '').trim();
-    if (!email) {
-      alert('メールアドレスを入力してください。');
-      return;
-    }
-    const subject = encodeURIComponent('【論文道場】APIキー利用申請');
-    const body = encodeURIComponent(
-      `論文道場 AI分析機能の継続利用を希望します。\n\n` +
-      `お名前: ${name || '（未入力）'}\n` +
-      `メールアドレス: ${email}\n\n` +
-      `---\n` +
-      `送信元: 論文道場 Academic Paper Dojo\n` +
-      `https://tnavi.github.io/ronbun-dojo/dojo.html`
-    );
-    window.location.href = `mailto:info@c4model.org?subject=${subject}&body=${body}`;
-  }
-
-  // STEP 2: モーダルからAPIキーを保存して分析を再開
-  function saveApiKeyFromModal() {
-    const key    = (document.getElementById('zeroModalApiKey')?.value || '').trim();
-    const status = document.getElementById('zeroModalStatus');
-    if (!key || !key.startsWith('sk-ant-')) {
-      if (status) status.innerHTML = '<span style="color:#c0392b;">⚠️ 有効なAPIキー（sk-ant-で始まる）を入力してください。</span>';
-      return;
-    }
-    localStorage.setItem('dojo-api-key', key);
-    // クレジットを100に回復
-    localStorage.setItem('dojo-credits', '100');
-    localStorage.removeItem('dojo-credits-used');
-    updateCreditUI();
-    calcScore();
-    closeZeroModal();
-    if (status) status.innerHTML = '';
-    alert('✅ APIキーを保存し、クレジットを100に回復しました。\nAI分析を再開できます。');
   }
 
   /* ===== アンケート送信（mailto） ===== */
@@ -1800,25 +1609,6 @@ Rel(d, p, "図コード送信")
       `https://tnavi.github.io/ronbun-dojo/dojo.html`
     );
     window.location.href = `mailto:info@c4model.org?subject=${subject}&body=${body}`;
-  }
-
-  function selectPlan(el) {
-    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-  function doCharge() {
-    // モック：Stripe Checkoutへ遷移する想定。ここではデモ用にクレジット追加
-    const selected = document.querySelector('.plan-card.selected');
-    const cr = selected ? parseInt(selected.dataset.credits || '50') : 50;
-    let credits = parseInt(localStorage.getItem('dojo-credits') || '0');
-    credits = Math.min(credits + cr, 200);
-    localStorage.setItem('dojo-credits', credits);
-    localStorage.setItem('dojo-credits-used', '1');
-    updateCreditUI();
-    closeChargeModal();
-    // calcScore を再実行してボタン状態を更新
-    calcScore();
-    alert(`✅ ${cr}クレジットをチャージしました。残高：${credits} Cr`);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -1886,7 +1676,7 @@ Rel(d, p, "図コード送信")
   }
 
   function startAnalysis() {
-    let credits = parseInt(localStorage.getItem('dojo-credits') || '50');
+    let credits = parseInt(localStorage.getItem('dojo-credits') || '100');
     if (credits < ANALYSIS_COST) {
       // クレジット不足: モーダルを開く
       openChargeModal();
@@ -1976,7 +1766,7 @@ ${get('references') || '（未入力）'}
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-opus-4-5',
         max_tokens: 1500,
         system: systemPrompt,
         messages: [{ role: 'user', content: prompt }]
@@ -2003,8 +1793,9 @@ ${get('references') || '（未入力）'}
       hint.innerHTML = '<strong>📄 AI分析結果</strong><br><pre style="white-space:pre-wrap; font-family:inherit; font-size:0.85rem; margin-top:0.5rem;">' + text + '</pre>';
       btn.disabled   = false;
       btn.textContent = '→ 分析完了';
-      // C4図も描画
-      renderPuml();
+      // C4図も描画（PlantUMLエリアが空の場合は描画しない）
+      const pumlCode = document.getElementById('pumlCode')?.value?.trim() || '';
+      if (pumlCode) renderPuml();
     })
     .catch(e => {
       hint.innerHTML = '<span style="color:#ffddaa;">⚠️ API接続エラー: ' + e.message + '</span>';
