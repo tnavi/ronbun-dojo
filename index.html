@@ -14,10 +14,6 @@
   <meta property="og:url" content="https://c4model.org/">
   <meta property="og:type" content="website">
 
-  <!-- Citation Metadata (Google Scholar) -->
-  <meta name="citation_author" content="Okumura, Osamu">
-  <meta name="citation_author_institution" content="C4 Model Study Group">
-
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 
@@ -510,50 +506,6 @@
     }
     .footer-links a:hover { color: var(--teal-lt); }
 
-    /* ─────────────── DOJO CTA ─────────────── */
-    .dojo-cta {
-      text-align: center;
-      margin: 2.5rem 0 0.5rem;
-    }
-    .dojo-cta-btn {
-      display: inline-block;
-      font-size: 1rem;
-      padding: 1rem 2.5rem;
-    }
-    .dojo-cta-note {
-      font-family: var(--font-mono);
-      font-size: 0.75rem; letter-spacing: 0.08em;
-      color: var(--ink-lite);
-      margin-top: 0.75rem;
-    }
-
-    /* ─────────────── CLICKABLE PIPE & CARD ─────────────── */
-    .pipe-step--link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      transition: background 0.2s, box-shadow 0.2s;
-    }
-    .pipe-step--link:hover {
-      background: var(--bg-alt);
-      box-shadow: inset 0 -3px 0 var(--teal);
-    }
-    .pipe-step--link:hover .pipe-title { color: var(--teal); }
-    .feature-card--link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, border-top-color 0.2s;
-    }
-    .feature-card--link:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px var(--shadow);
-      border-top-color: var(--teal);
-    }
-    .feature-card--link:hover .feature-title { color: var(--teal); }
-
     /* ─────────────── REVEAL ANIMATION ─────────────── */
     .reveal {
       opacity: 0; transform: translateY(20px);
@@ -573,7 +525,65 @@
       .pipe-step::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1rem; transform: translateX(-50%); }
       .pipe-step:last-child::after { display: none; }
     }
-  </style>
+  
+/* ===== SITE NAVIGATION BAR (PC + smartphone) ===== */
+.site-nav {
+  background: #1A7A8A;
+  padding: 0.5rem 1.5rem;
+  display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  font-size: 0.82rem;
+  border-bottom: 2px solid #B8860B;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.site-nav-label {
+  font-size: 0.7rem; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.55); white-space: nowrap;
+  margin-right: 0.75rem; flex-shrink: 0;
+}
+.site-nav a {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  color: rgba(255,255,255,0.9); font-weight: bold;
+  padding: 0.3rem 0.85rem; border-radius: 4px;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background 0.15s; text-decoration: none;
+}
+.site-nav a:hover { background: rgba(255,255,255,0.15); }
+.site-nav a.current {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+.site-nav .nav-sep { color: rgba(255,255,255,0.3); margin: 0 0.1rem; flex-shrink: 0; }
+/* ===== SITE FOOTER NAV ===== */
+.site-footer-nav {
+  background: #1A1A2E;
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.75rem;
+  border-top: 2px solid #1A7A8A; font-size: 0.85rem;
+}
+.site-footer-nav .footer-nav-links {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+}
+.site-footer-nav a {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  color: rgba(255,255,255,0.85); font-weight: bold;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 4px; white-space: nowrap;
+  transition: background 0.15s; text-decoration: none;
+}
+.site-footer-nav a:hover { background: rgba(255,255,255,0.12); }
+.site-footer-nav a.current {
+  background: rgba(184,134,11,0.3);
+  border-color: rgba(184,134,11,0.6);
+}
+.site-footer-copy {
+  font-size: 0.72rem; color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em; white-space: nowrap;
+}
+
+</style>
 </head>
 
 <body>
@@ -583,12 +593,9 @@
     <a href="/" class="nav-logo">c4model.org</a>
     <ul class="nav-links">
       <li><a href="#concept">Concept</a></li>
+      <li><a href="haiku-engineering.html">Haiku Engineering</a></li>
       <li><a href="#dojo">Thesis Dojo</a></li>
       <li><a href="#publications">Publications</a></li>
-      <li><a href="#core-values" style="position:relative;" id="nav-core-values">
-        Core Values
-        <span style="position:absolute;top:-3px;right:-7px;width:5px;height:5px;border-radius:50%;background:var(--gold);display:block;"></span>
-      </a></li>
       <li><a href="#org">Contact</a></li>
     </ul>
     <div class="nav-right">
@@ -624,10 +631,6 @@
           <span data-en>What is C4?</span>
           <span data-ja style="display:none">C4モデルとは？</span>
         </a>
-      </div>
-
-      <div class="hero-video-wrapper reveal" style="margin-top: 3.5rem; max-width: 800px; width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; box-shadow: 0 24px 48px rgba(26,26,46,0.15); border: 1px solid var(--border);">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/W8KAt7YeeUs?autoplay=0&rel=0" title="Ronbun Dojo Promotional Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
 
       <div class="hero-stats">
@@ -721,75 +724,65 @@
       </div>
 
       <div class="pipeline reveal">
-        <a class="pipe-step pipe-step--link" href="dojo.html#stage0">
+        <div class="pipe-step">
           <div class="pipe-num">01</div>
           <div class="pipe-title" data-en>Research Question</div>
           <div class="pipe-title" data-ja style="display:none">研究問いの入力</div>
           <div class="pipe-body" data-en>Input your topic and keywords at Stage 0</div>
           <div class="pipe-body" data-ja style="display:none">Stage 0でテーマ・キーワードを入力</div>
-        </a>
-        <a class="pipe-step pipe-step--link" href="dojo.html#structure">
+        </div>
+        <div class="pipe-step">
           <div class="pipe-num">02</div>
           <div class="pipe-title" data-en>C4 Structuring</div>
           <div class="pipe-title" data-ja style="display:none">C4構造化</div>
           <div class="pipe-body" data-en>AI generates L1–L4 PlantUML diagrams automatically</div>
           <div class="pipe-body" data-ja style="display:none">AIがL1〜L4 PlantUML図を自動生成</div>
-        </a>
-        <a class="pipe-step pipe-step--link" href="dojo.html#write">
+        </div>
+        <div class="pipe-step">
           <div class="pipe-num">03</div>
           <div class="pipe-title" data-en>7R Prompting</div>
           <div class="pipe-title" data-ja style="display:none">7Rプロンプト</div>
           <div class="pipe-body" data-en>Iterative refinement through 7 structured prompts</div>
           <div class="pipe-body" data-ja style="display:none">7つの構造化プロンプトで反復改良</div>
-        </a>
-        <a class="pipe-step pipe-step--link" href="dojo.html#submit">
+        </div>
+        <div class="pipe-step">
           <div class="pipe-num">04</div>
           <div class="pipe-title" data-en>Manuscript Output</div>
           <div class="pipe-title" data-ja style="display:none">原稿出力</div>
           <div class="pipe-body" data-en>Word / PDF ready for journal submission</div>
           <div class="pipe-body" data-ja style="display:none">学術誌投稿用Word / PDFで出力</div>
-        </a>
-      </div>
-
-      <!-- CTA to dojo -->
-      <div class="dojo-cta reveal">
-        <a href="dojo.html" class="btn-primary dojo-cta-btn">
-          <span data-en>→ Open Thesis Dojo — Start Stage 0</span>
-          <span data-ja style="display:none">→ 論文道場を開く — Stage 0 入力スタート</span>
-        </a>
-        <p class="dojo-cta-note" data-en>Free to use · No account required · Runs in your browser</p>
-        <p class="dojo-cta-note" data-ja style="display:none">無料 · アカウント不要 · ブラウザで完結</p>
+        </div>
       </div>
 
       <div class="dojo-features reveal">
-        <a class="feature-card feature-card--link" href="dojo.html#stage0">
+        <div class="feature-card">
           <div class="feature-icon">⬡</div>
           <div class="feature-title" data-en>Wellbeing Writing</div>
           <div class="feature-title" data-ja style="display:none">ウェルビーイング執筆</div>
           <div class="feature-body" data-en>Minimal input burden — designed for sustainable academic practice</div>
           <div class="feature-body" data-ja style="display:none">入力負荷を最小化した、持続可能な論文執筆設計</div>
-        </a>
-        <a class="feature-card feature-card--link" href="dojo.html#c4uml">
+        </div>
+        <div class="feature-card">
           <div class="feature-icon">◈</div>
           <div class="feature-title" data-en>PlantUML Diagrams</div>
           <div class="feature-title" data-ja style="display:none">PlantUML自動図解</div>
           <div class="feature-body" data-en>Auto-generated C4 architecture diagrams embedded in your manuscript</div>
           <div class="feature-body" data-ja style="display:none">C4図を自動生成し論文に直接埋め込み</div>
-        </a>
-        <a class="feature-card feature-card--link" href="dojo.html#formats">
+        </div>
+        <div class="feature-card">
           <div class="feature-icon">✦</div>
           <div class="feature-title" data-en>Multi-format Export</div>
           <div class="feature-title" data-ja style="display:none">マルチ形式エクスポート</div>
-          <div class="feature-body" data-en>Customizable export templates supporting various academic standards</div>
-          <div class="feature-body" data-ja style="display:none">各種学術基準に対応した柔軟なエクスポートテンプレート</div>
-        </a>
-        <a class="feature-card feature-card--link" href="dojo.html#write">
+          <div class="feature-body" data-en>IEEE / ACM / 感性工学会 templates ready for direct submission</div>
+          <div class="feature-body" data-ja style="display:none">IEEE / ACM / 感性工学会 形式に対応した直接投稿テンプレート</div>
+        </div>
+        <div class="feature-card">
           <div class="feature-icon">⬟</div>
           <div class="feature-title" data-en>Claude API Powered</div>
           <div class="feature-title" data-ja style="display:none">Claude API連携</div>
           <div class="feature-body" data-en>Cloudflare Workers backend with D1 usage logging</div>
           <div class="feature-body" data-ja style="display:none">Cloudflare WorkersバックエンドとD1使用ログ</div>
-        </a>
+        </div>
       </div>
     </div>
   </section>
@@ -808,10 +801,6 @@
       <p class="pub-intro reveal" data-en>Peer-reviewed journals, Kindle monographs, and ResearchGate preprints spanning C4 model applications in literature, music, and AI systems.</p>
       <p class="pub-intro reveal" data-ja style="display:none">文学・音楽・AIシステムへのC4モデル応用を扱う査読論文・Kindle著書・ResearchGateプレプリント一覧。</p>
 
-      <div class="zotero-link" style="border: 1px solid #eee; padding: 10px; font-size: 0.85em; background-color: #fafafa; margin-bottom: 20px;">
-        <p><strong>【技術的連携について】</strong> 当サイトは学術情報の円滑な流通のため、文献管理ソフト<strong>Zotero</strong>等との技術的連携（COinS/Metadata準拠）を行っています。ブラウザのコネクタを利用することで、以下の業績リストをSIST 02等の標準形式で直接取り込むことが可能です。</p>
-      </div>
-
       <!-- Peer-reviewed -->
       <div class="pub-category reveal">
         <div class="pub-cat-label">peer-reviewed journals</div>
@@ -819,12 +808,10 @@
           <li class="pub-item">
             <div class="pub-item-title">Schubert's "Ave Maria (Ellen's Song No. 3)": Poetic Structure Analysis Using the C4 Model</div>
             <div class="pub-item-meta">Okumura, O. (2025). <em>Humanities and Social Sciences, 13</em>(6). &nbsp;<a href="https://doi.org/10.11648/j.hss.20251306.23" target="_blank" rel="noopener">DOI →</a></div>
-            <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info:ofi/fmt:kev:mtx:journal&amp;rft.atitle=Schubert%27s%20%22Ave%20Maria%20%28Ellen%27s%20Song%20No.%203%29%22%3A%20Poetic%20Structure%20Analysis%20Using%20the%20C4%20Model&amp;rft.jtitle=Humanities%20and%20Social%20Sciences&amp;rft.stitle=HSS&amp;rft.au=Okumura%2C%20O.&amp;rft.date=2025&amp;rft.volume=13&amp;rft.issue=6&amp;rft.genre=article"></span>
           </li>
           <li class="pub-item">
             <div class="pub-item-title">Visualizing Film Narrative: Applying the C4 Model to "Oi, Ohoi"</div>
             <div class="pub-item-meta">Okumura, O. (2025). <em>Languages, Literature and Culture, 1</em>(1). &nbsp;<a href="https://doi.org/10.11648/j.llc.20250101.15" target="_blank" rel="noopener">DOI →</a></div>
-            <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info:ofi/fmt:kev:mtx:journal&amp;rft.atitle=Visualizing%20Film%20Narrative%3A%20Applying%20the%20C4%20Model%20to%20%22Oi%2C%20Ohoi%22&amp;rft.jtitle=Languages%2C%20Literature%20and%20Culture&amp;rft.au=Okumura%2C%20O.&amp;rft.date=2025&amp;rft.volume=1&amp;rft.issue=1&amp;rft.genre=article"></span>
           </li>
           <li class="pub-item">
             <div class="pub-item-title">Digital Legacy Inheritance System Architecture: A Systematic Analysis Using PlantUML C4 Model</div>
@@ -840,12 +827,10 @@
           <li class="pub-item">
             <div class="pub-item-title">PlantUML C4モデル活用入門ガイド: ソフトウェア設計から文学分析まで</div>
             <div class="pub-item-meta">C4モデル研究会, & 奥村, 治 (2024). Amazon Kindle. &nbsp;<a href="https://www.amazon.co.jp/dp/B0GG817BWF" target="_blank" rel="noopener">Amazon →</a></div>
-            <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info:ofi/fmt:kev:mtx:book&amp;rft.btitle=PlantUML%20C4%E3%83%A2%E3%83%87%E3%83%AB%E6%B4%BB%E7%94%A8%E5%85%A5%E9%96%80%E3%82%AC%E3%82%A4%E3%83%89&amp;rft.au=Nakanishi%2C%20Kamon&amp;rft.pub=Amazon%20Kindle&amp;rft.date=2024&amp;rft.genre=book"></span>
           </li>
           <li class="pub-item">
             <div class="pub-item-title">松尾芭蕉俳句 ナラティブ構造とC4モデルによる学術的分析</div>
             <div class="pub-item-meta">奥村, 治 (2025). Amazon Kindle.</div>
-            <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info:ofi/fmt:kev:mtx:book&amp;rft.btitle=%E6%9D%BE%E5%B0%BE%E8%8A%AD%E8%95%89%E4%BF%B3%E5%8F%A5%20%E3%83%8A%E3%83%A9%E3%83%86%E3%82%A3%E3%83%96%E7%A7%82%E9%80%A0%E3%81%A8C4%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AB%E3%82%88%E3%82%8B%E5%AD%A6%E8%A1%93%E7%9A%84%E5%88%86%E6%9E%90&amp;rft.au=Okumura%2C%20Osamu&amp;rft.pub=Amazon%20Kindle&amp;rft.date=2025&amp;rft.genre=book"></span>
           </li>
           <li class="pub-item">
             <div class="pub-item-title">俳句鑑賞における認知アーキテクチャの可視化: C4モデルとDEMATEL法による感性工学的差異の定量分析</div>
@@ -962,103 +947,27 @@
     </div>
   </section>
 
-  <!-- ═══════════ CORE VALUES ═══════════ -->
-  <section id="core-values" style="background: var(--ink); color: var(--bg);">
-    <div class="container">
-      <div class="section-label" style="color: rgba(250,250,248,0.4);">
-        core values &amp; technology
-      </div>
-      <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; line-height: 1.25; margin-bottom: 0.75rem; color: var(--bg);">
-        3大コア・バリュー
-      </h2>
-      <p style="font-size: 0.9rem; color: rgba(250,250,248,0.5); margin-bottom: 3.5rem; font-family: var(--font-mono); letter-spacing: 0.06em;">
-        The Three Pillars of c4model.org Platform
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-
-        <!-- Pillar 1 -->
-        <div style="border: 1px solid rgba(250,250,248,0.12); border-radius: 2px; padding: 2rem; position: relative; transition: border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(184,134,11,0.5)'"
-             onmouseout="this.style.borderColor='rgba(250,250,248,0.12)'">
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 1.2rem; text-transform: uppercase;">
-            01 ── Multi-Agent Orchestration
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--bg); margin-bottom: 1rem; line-height: 1.4;">
-            連携の強さと信頼性
-          </h3>
-          <p style="font-size: 0.88rem; line-height: 1.85; color: rgba(250,250,248,0.72);">
-            当プラットフォームのバックエンドは、全体統括・ルール設計・コード生成を担う複数の高度AI（Antigravity、Gemini、Claude等）が役割を自律的に分離・補完し合う<strong style="color: var(--bg);">「マルチエージェント・オーケストレーション技術」</strong>によって駆動しています。単一のLLMでは回避不可能であった確率論的な出力揺れを、エージェント間の厳格な相互インスペクション（監査）によって制御し、実務インフラとして揺るぎない、極めて高い信頼性と強固な連携体制を確立しています。
-          </p>
-        </div>
-
-        <!-- Pillar 2 -->
-        <div style="border: 1px solid rgba(250,250,248,0.12); border-radius: 2px; padding: 2rem; position: relative; transition: border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(26,122,138,0.5)'"
-             onmouseout="this.style.borderColor='rgba(250,250,248,0.12)'">
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; color: var(--teal-lt); margin-bottom: 1.2rem; text-transform: uppercase;">
-            02 ── Compliance with Simon Brown's C4 Model
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--bg); margin-bottom: 1rem; line-height: 1.4;">
-            国際標準クリア
-          </h3>
-          <p style="font-size: 0.88rem; line-height: 1.85; color: rgba(250,250,248,0.72);">
-            論文道場および俳句の科学が生成するすべての構造図は、世界のソフトウェアアーキテクチャ記述におけるデファクトスタンダードである<strong style="color: var(--bg);">Simon Brown氏の「C4モデル（Context, Container, Component, Code）」</strong>に厳格に準拠しています。非構造化テキストから、グローバル共通の多階層アーキテクチャへの写像をノーコードで実現し、国内外の査読付き論文（IEEE等）や知財文書へそのまま掲載・通用可能な、国際水準の記述仕様（Specification Engineering）をクリアしています。
-          </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div style="border: 1px solid rgba(250,250,248,0.12); border-radius: 2px; padding: 2rem; position: relative; transition: border-color 0.2s;"
-             onmouseover="this.style.borderColor='rgba(184,134,11,0.5)'"
-             onmouseout="this.style.borderColor='rgba(250,250,248,0.12)'">
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 1.2rem; text-transform: uppercase;">
-            03 ── Deterministic Validation &amp; Zero-Error Execution
-          </div>
-          <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--bg); margin-bottom: 1rem; line-height: 1.4;">
-            新規性・独自性（特許出願準備中）
-          </h3>
-          <p style="font-size: 0.88rem; line-height: 1.85; color: rgba(250,250,248,0.72);">
-            当システムは、確率論的なAI出力を決定論的なルールベースで永続ロックする独自の<strong style="color: var(--bg);">「Skillsフィルター（事前静的バリデーター機構）」</strong>を世界で初めて実装いたしました。L1からL4にいたる全階層のPlantUML生成において、日本語環境特有の文字化けや構文エラーを「発生前にシステム層で物理的に100%遮断」する全く新しいアーキテクチャ思想に基づき、先行調査におけるエラー率（約18.0%）を完全根絶（0.0%）へと導く、圧倒的な新規性と独創性を実証しています。
-          </p>
-        </div>
-
-      </div><!-- /grid -->
-
-      <!-- 実証データ バー -->
-      <div style="margin-top: 3rem; padding: 1.75rem 2rem; border: 1px solid rgba(250,250,248,0.1); border-radius: 2px; background: rgba(250,250,248,0.03); display: flex; flex-wrap: wrap; gap: 2.5rem; align-items: center; justify-content: space-around;">
-        <div style="text-align: center;">
-          <div style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--gold); line-height: 1;">0.0%</div>
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(250,250,248,0.45); margin-top: 0.4rem;">文字化け・エラー率</div>
-        </div>
-        <div style="width: 1px; height: 40px; background: rgba(250,250,248,0.1);"></div>
-        <div style="text-align: center;">
-          <div style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--teal-lt); line-height: 1;">100%</div>
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(250,250,248,0.45); margin-top: 0.4rem;">skinparam 自動付加率 L1〜L4</div>
-        </div>
-        <div style="width: 1px; height: 40px; background: rgba(250,250,248,0.1);"></div>
-        <div style="text-align: center;">
-          <div style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--bg); line-height: 1;">1.8s</div>
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(250,250,248,0.45); margin-top: 0.4rem;">平均描画処理速度（従来比 35.7%短縮）</div>
-        </div>
-        <div style="width: 1px; height: 40px; background: rgba(250,250,248,0.1);"></div>
-        <div style="text-align: center;">
-          <div style="font-family: var(--font-display); font-size: 2.4rem; font-weight: 900; color: var(--gold); line-height: 1;">4+</div>
-          <div style="font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; color: rgba(250,250,248,0.45); margin-top: 0.4rem;">Academia.edu 掲載当日 国際閲覧数</div>
-        </div>
-      </div>
-
-    </div><!-- /container -->
-  </section>
-
   <!-- ═══════════ FOOTER ═══════════ -->
-  <footer>
+  
+<!-- ===== SITE FOOTER NAVIGATION ===== -->
+<nav class="site-footer-nav" aria-label="フッターナビ">
+  <div class="footer-nav-links">
+    <a href="https://c4model.org/" class="current">🏠 トップ（目次）（現在地）</a>
+    <a href="https://c4model.org/dojo.html">📝 論文道場</a>
+    <a href="haiku-engineering.html">🌸 俳句の科学</a>
+    <a href="basho-case.html">📚 芯蕉事例</a>
+    <a href="publications.html">📰 論文リスト</a>
+  </div>
+  <div class="site-footer-copy">© 2026 C4モデル研究会® · c4model.org · info@c4model.org</div>
+</nav>
+
+<footer>
     <div class="footer-inner">
       <div class="footer-logo">c4model.org</div>
       <div class="footer-links">
         <a href="#concept">Concept</a>
         <a href="#dojo">Thesis Dojo</a>
         <a href="#publications">Publications</a>
-        <a href="#core-values" style="color:var(--gold);">Core Values</a>
         <a href="mailto:info@c4model.org">info@c4model.org</a>
       </div>
       <div class="footer-copy">© 2025–2026 C4モデル研究会® / Osamu Okumura. All rights reserved.</div>
