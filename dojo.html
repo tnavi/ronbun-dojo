@@ -81,6 +81,69 @@
     .topnav span { color: var(--main-muted); }
     .topnav strong { color: var(--main-text); }
 
+    /* ===== SITE NAVIGATION BAR (PC + スマホ共通) ===== */
+    .site-nav {
+      background: #1A6B7A;
+      padding: 0.5rem 1.5rem;
+      display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+      font-size: 0.82rem;
+      border-bottom: 2px solid #A8C8E0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .site-nav-label {
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.55); white-space: nowrap;
+      margin-right: 0.75rem; flex-shrink: 0;
+    }
+    .site-nav a {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      color: rgba(255,255,255,0.9); font-weight: bold;
+      padding: 0.3rem 0.85rem;
+      border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .site-nav a:hover { background: rgba(255,255,255,0.15); }
+    .site-nav a.current {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .site-nav .nav-sep {
+      color: rgba(255,255,255,0.25); margin: 0 0.1rem; flex-shrink: 0;
+    }
+
+    /* ===== SITE FOOTER NAV ===== */
+    .site-footer-nav {
+      background: #0D2A3E;
+      padding: 1.25rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.75rem;
+      border-top: 2px solid #1A6B7A;
+      font-size: 0.85rem;
+    }
+    .site-footer-nav .footer-nav-links {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
+    }
+    .site-footer-nav a {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      color: rgba(255,255,255,0.85); font-weight: bold;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 4px; white-space: nowrap;
+      transition: background 0.15s; text-decoration: none;
+    }
+    .site-footer-nav a:hover { background: rgba(255,255,255,0.12); }
+    .site-footer-nav a.current {
+      background: rgba(26,107,122,0.5);
+      border-color: rgba(168,200,224,0.6);
+    }
+    .site-footer-copy {
+      font-size: 0.72rem; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.06em; white-space: nowrap;
+    }
+
     /* ===== LAYOUT ===== */
     .layout {
       display: flex; flex: 1;
@@ -629,6 +692,20 @@
   </div>
 </div>
 
+<!-- ===== SITE NAVIGATION BAR（全デバイス共通・常時表示） ===== -->
+<nav class="site-nav" aria-label="サイト内ページナビゲーション">
+  <span class="site-nav-label">PAGES ▸</span>
+  <a href="index.html" id="nav-top">🏠 トップ（目次）</a>
+  <span class="nav-sep">｜</span>
+  <a href="dojo.html" id="nav-dojo" class="current">📝 論文道場</a>
+  <span class="nav-sep">｜</span>
+  <a href="https://c4model.org/basho-case.html" id="nav-haiku" target="_blank">🌸 俳句の科学</a>
+  <span class="nav-sep">｜</span>
+  <a href="foodloss_c4_paper.html" id="nav-foodloss">🥗 フードロス事例</a>
+  <span class="nav-sep">｜</span>
+  <a href="#settings" id="nav-settings">⚙️ API設定</a>
+</nav>
+
 <div class="layout">
 
 <!-- ===== SIDEBAR ===== -->
@@ -891,13 +968,12 @@
       <div class="credit-meter-wrap">
         <div class="credit-meter-label">
           <span data-ja>残りクレジット</span><span data-en style="display:none">Credits</span>
-          <span class="credit-free-badge" id="creditFreeBadge">初回体験 50cr付与済み</span>
+          <span class="credit-free-badge" id="creditFreeBadge">モニタリング体験 100cr付与済み</span>
         </div>
         <div class="credit-row">
-          <div class="credit-bar-bg"><div class="credit-bar-fill" id="creditBarFill" style="width:50%"></div></div>
-          <span class="credit-display" id="creditNum">50</span>
+          <div class="credit-bar-bg"><div class="credit-bar-fill" id="creditBarFill" style="width:100%"></div></div>
+          <span class="credit-display" id="creditNum">100</span>
           <span class="credit-denom">/100</span>
-          <button class="btn-charge" onclick="openChargeModal()">＋ チャージ</button>
         </div>
         <div class="zero-stop-note">※ 残量0でも自動引き落としは一切されません</div>
       </div>
@@ -1710,8 +1786,9 @@ Rel(d, p, "図コード送信")
   function startAnalysis() {
     let credits = parseInt(localStorage.getItem('dojo-credits') || '100');
     if (credits < ANALYSIS_COST) {
-      // クレジット不足: モーダルを開く
-      openChargeModal();
+      // クレジット不足: シンプルなメッセージを表示（モーダル不要）
+      const hint = document.getElementById('scoreHint');
+      if (hint) hint.innerHTML = '<span style="color:#ffddaa;">⚠️ 無料体験クレジットを使い切りました。info@c4model.org までお問い合わせください。</span>';
       return;
     }
 
@@ -2000,6 +2077,17 @@ Simon Brown (2018). The C4 Model for Software Architecture. InfoQ.
 
   document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
 </script>
+
+<!-- ===== SITE FOOTER NAVIGATION（全デバイス共通） ===== -->
+<nav class="site-footer-nav" aria-label="フッターページナビゲーション">
+  <div class="footer-nav-links">
+    <a href="index.html">🏠 トップページに戻る</a>
+    <a href="dojo.html" class="current">📝 論文道場（現在地）</a>
+    <a href="https://c4model.org/basho-case.html" target="_blank">🌸 俳句の科学</a>
+    <a href="https://www.researchgate.net/publication/404923825_deyucuishiniokeruyushengshicainozidomoshitangheno_deribarijingluzuishihuaniguansuruyanjiu_--C4moderuniyorushisutemuakitekuchafenxi--" target="_blank">🥗 フードロス事例</a>
+  </div>
+  <div class="site-footer-copy">© 2026 C4モデル研究会® · c4model.org · info@c4model.org</div>
+</nav>
 
 <!-- フッター：Zotero連携注記 -->
 <div style="background:#F5F0E8; border-top:1px solid #D8C9A8; padding:0.85rem 2rem; font-size:0.82rem; color:#5A5040; text-align:center; line-height:1.6;">
