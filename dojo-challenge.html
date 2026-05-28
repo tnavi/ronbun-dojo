@@ -259,7 +259,28 @@ footer {
   display: flex; justify-content: space-between; align-items: center;
 }
 footer p { font-size: 0.78rem; color: var(--ink3); letter-spacing: 0.05em; }
-
+/* ── 共通フッターナビ ── */
+.site-footer-nav {
+  background: rgba(26,24,20,0.97);
+  padding: 0.6rem 2rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 0.4rem;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  border-top: 0.5px solid rgba(255,255,255,0.1);
+}
+.site-footer-nav a {
+  font-family: var(--sans); font-size: 0.72rem;
+  letter-spacing: 0.08em; color: rgba(255,255,255,0.6);
+  text-decoration: none; padding: 0.3rem 0.7rem;
+  transition: background 0.15s, color 0.15s; white-space: nowrap;
+}
+.site-footer-nav a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.site-footer-nav a.current {
+  background: rgba(139,58,42,0.5); color: #fff; font-weight: 700;
+  border-radius: 2px;
+}
+.site-footer-nav .nav-sep { color: rgba(255,255,255,0.2); font-size: 0.65rem; }
+body { padding-bottom: 2.8rem; }
 
 /* ── ANIMATIONS ── */
 .reveal {
@@ -292,7 +313,7 @@ footer p { font-size: 0.78rem; color: var(--ink3); letter-spacing: 0.05em; }
     <li><a href="#solution">解決策</a></li>
     <li><a href="#process">プロセス</a></li>
     <li><a href="#academic-foundation">信頼の根拠</a></li>
-    <li><a href="index.html">🏠 トップ</a></li>
+    <li><a href="https://c4model.org/">🏠 トップ</a></li>
     <li><a href="dojo.html">道場へ入る</a></li>
   </ul>
 </nav>
@@ -570,18 +591,12 @@ footer p { font-size: 0.78rem; color: var(--ink3); letter-spacing: 0.05em; }
 </section>
 
 <footer>
-  <p>© 2026 論文道場 — C4 Model Academic Writing Framework · <a href="index.html" style="color:inherit;">c4model.org</a></p>
+  <p>© 2026 論文道場 — C4 Model Academic Writing Framework · <a href="https://c4model.org/" style="color:inherit;">c4model.org</a></p>
 </footer>
 
 <!-- 共通フッターナビ -->
-<nav class="site-footer-nav" aria-label="サイト共通ナビゲーション" style="text-align: center; margin: 3rem 0 1rem 0; padding-top: 1.5rem; border-top: 1px solid var(--line); font-family: var(--sans);">
-  <style>
-    .site-footer-nav a { color: var(--ink2); text-decoration: none; margin: 0 0.5rem; font-size: 0.9rem; }
-    .site-footer-nav a:hover { text-decoration: underline; color: var(--accent); }
-    .site-footer-nav a.current { font-weight: bold; color: var(--accent); border-bottom: 2px solid var(--accent); }
-    .nav-sep { color: var(--line); }
-  </style>
-  <a href="index.html">🏠 TOP</a>
+<nav class="site-footer-nav" aria-label="サイト共通ナビゲーション">
+  <a href="https://c4model.org/">🏠 TOP</a>
   <span class="nav-sep">|</span>
   <a href="dojo.html">⛩ 論文道場</a>
   <span class="nav-sep">|</span>

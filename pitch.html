@@ -450,6 +450,21 @@
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.2s; }
     .delay-3 { animation-delay: 0.3s; }
+
+    /* ===== BACK TO TOP ===== */
+    #back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: var(--teal); color: #fff;
+      border: none; border-radius: 50%;
+      width: 3rem; height: 3rem;
+      font-size: 1.3rem; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: auto; }
+    #back-to-top:hover { transform: translateY(-3px); background: #1A5A6A; }
   </style>
 </head>
 <body>
@@ -466,15 +481,15 @@
   <span class="site-nav-label">C4モデル研究会</span>
   <a href="https://c4model.org/">🏠 TOP</a>
   <span class="nav-sep">|</span>
-  <a href="https://c4model.org/dojo.html">⛩ 論文道場</a>
+  <a href="dojo.html">⛩ 論文道場</a>
   <span class="nav-sep">|</span>
-  <a href="https://c4model.org/pitch.html" class="current">📊 ソリューション紹介</a>
+  <a href="pitch.html" class="current">📊 ソリューション紹介</a>
   <span class="nav-sep">|</span>
-  <a href="https://c4model.org/haiku-engineering.html">🌸 俳句の科学</a>
+  <a href="haiku-engineering.html">🌸 俳句の科学</a>
   <span class="nav-sep">|</span>
-  <a href="https://c4model.org/basho-case.html">📖 芭蕉事例</a>
+  <a href="dojo-challenge.html">🏆 道場チャレンジ</a>
   <span class="nav-sep">|</span>
-  <a href="https://c4model.org/publications.html">📰 論文リスト</a>
+  <a href="https://www.researchgate.net/profile/Osamu-Okumura-2">📰 論文リスト (ResearchGate)</a>
 </nav>
 
 <!-- HERO -->
@@ -489,7 +504,7 @@
       <span class="hero-tag">🤖 決定論的AI制御</span>
       <span class="hero-tag">📄 IMRaD英語Abstract自動生成</span>
     </div>
-    <a href="https://c4model.org/dojo.html" class="hero-cta fade-up delay-3">
+    <a href="dojo.html" class="hero-cta fade-up delay-3">
       ⛩ 論文道場を使ってみる →
     </a>
   </div>
@@ -791,7 +806,7 @@
   <h2>論文道場を今すぐ体験</h2>
   <p>ブラウザだけで動作。インストール不要。まず100クレジット無償でお試しください。</p>
   <div class="cta-btns">
-    <a href="https://c4model.org/dojo.html" class="cta-btn-primary">⛩ 論文道場を開く</a>
+    <a href="dojo.html" class="cta-btn-primary">⛩ 論文道場を開く</a>
     <a href="https://c4model.org/" class="cta-btn-secondary">🏠 c4model.org TOP</a>
   </div>
 </section>
@@ -800,14 +815,26 @@
 <footer class="site-footer-nav">
   <div class="footer-nav-links">
     <a href="https://c4model.org/">🏠 TOP</a>
-    <a href="https://c4model.org/dojo.html">⛩ 論文道場</a>
-    <a href="https://c4model.org/pitch.html" class="current">📊 ソリューション紹介</a>
-    <a href="https://c4model.org/haiku-engineering.html">🌸 俳句の科学</a>
-    <a href="https://c4model.org/basho-case.html">📖 芭蕉事例</a>
-    <a href="https://c4model.org/publications.html">📰 論文リスト</a>
+    <a href="dojo.html">⛩ 論文道場</a>
+    <a href="pitch.html" class="current">📊 ソリューション紹介</a>
+    <a href="haiku-engineering.html">🌸 俳句の科学</a>
+    <a href="dojo-challenge.html">🏆 道場チャレンジ</a>
+    <a href="https://www.researchgate.net/profile/Osamu-Okumura-2">📰 論文リスト (ResearchGate)</a>
   </div>
   <div class="footer-copy">© 2025 C4モデル研究会® — c4model.org</div>
 </footer>
+
+<!-- BACK TO TOP BUTTON -->
+<button id="back-to-top" title="ページトップへ戻る" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Back to Top: 300px以上スクロールで表示
+  var btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) { btn.classList.add('visible'); }
+    else { btn.classList.remove('visible'); }
+  });
+</script>
 
 </body>
 </html>
