@@ -1079,6 +1079,7 @@ footer {
     <li><a href="#videos">動画</a></li>
     <li><a href="#facesheet">Facesheet</a></li>
     <li><a href="haiku-casestudy.html" style="color: var(--gold); font-weight: bold;">事例研究</a></li>
+    <li><a href="https://forms.gle/XXXXXXXXXXXXXXXX" id="survey-nav-link" target="_blank" rel="noopener" style="color: var(--gold); font-weight: bold;">アンケート</a></li>
   </ul>
   <div class="nav-right">
     <div class="lang-toggle">
@@ -1708,7 +1709,7 @@ footer {
           </div>
           <div class="career-item">
             <span class="career-era">学会</span>
-            <span class="career-role">日本図書館学会 会員</span>
+            <span class="career-role">日本図書館情報学会 会員</span>
           </div>
         </div>
       </div>
@@ -2648,6 +2649,9 @@ async function exportPDF() {
 
     btn.textContent = '📄 PDF出力';
     btn.disabled = false;
+
+    // アンケートモーダル表示（PDF保存完了0.8秒後）
+    setTimeout(() => openSurveyModal(), 800);
   }
 }
 
@@ -2655,6 +2659,72 @@ async function exportPDF() {
 renderHistory();
 </script>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"36c63ee3382347f385e99c124f5c1c0a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<!-- ===== アンケートモーダル ===== -->
+<div id="survey-modal"
+     role="dialog" aria-modal="true" aria-labelledby="survey-modal-title"
+     style="display:none; position:fixed; inset:0; z-index:9999;
+            background:rgba(26,26,46,0.75);
+            align-items:center; justify-content:center; padding:1rem;">
+  <div style="background:#FAFAF8; border-radius:14px; max-width:500px; width:100%;
+              max-height:90vh; overflow-y:auto; padding:2.4rem 2rem 2rem;
+              position:relative; box-shadow:0 12px 52px rgba(0,0,0,0.28);
+              text-align:center; font-family:'Source Serif 4',Georgia,serif;">
+    <button onclick="closeSurveyModal()" aria-label="閉じる"
+            style="position:absolute; top:.9rem; right:1rem; background:none; border:none;
+                   font-size:1.3rem; cursor:pointer; color:#7A7A9A;">✕</button>
+    <div style="font-size:2.2rem; margin-bottom:.4rem;">🌸</div>
+    <h3 id="survey-modal-title"
+        style="font-family:'Fraunces',Georgia,serif; color:#1A1A2E; font-size:1.15rem;
+               margin:0 0 .6rem; font-weight:700;">PDF出力 ありがとうございます</h3>
+    <p style="color:#3D3D5C; font-size:.86rem; line-height:1.8; margin:0 0 .5rem; text-align:left;">
+      俳句の科学入門・Facesheetをご利用いただきありがとうございます。<br>
+      よろしければ、<strong>5〜8分ほどのアンケート</strong>にご協力ください。
+    </p>
+    <div style="background:#f0ede8; border-left:3px solid #8B7355; border-radius:6px;
+                padding:.7rem 1rem; margin:.7rem 0 1.2rem; text-align:left;">
+      <p style="margin:0; font-size:.82rem; color:#3D3D5C; line-height:1.7;">
+        📊 アンケートでは<strong>「ChatGPT・Copilotなど他のAIとの比較」</strong>もお聞きします。<br>
+        皆様のご意見が、本システムの学術研究・改善に直結します。
+      </p>
+    </div>
+    <a id="survey-modal-link" href="https://forms.gle/XXXXXXXXXXXXXXXX"
+       target="_blank" rel="noopener"
+       style="display:block; background:#1A1A2E; color:#FAFAF8; padding:.82rem 2rem;
+              border-radius:8px; text-decoration:none; font-size:.92rem; font-weight:700;
+              letter-spacing:.05em; margin-bottom:.75rem;">
+      📝 アンケートに答える（5〜8分）
+    </a>
+    <button onclick="closeSurveyModal()"
+            style="background:none; border:none; color:#7A7A9A; font-size:.8rem;
+                   cursor:pointer; text-decoration:underline;">今回はスキップする</button>
+    <p style="margin:.5rem 0 0; font-size:.74rem; color:#9A9AB0;">
+      ご回答は研究・改善目的のみに使用します。個人情報の入力は不要です。
+    </p>
+  </div>
+</div>
+
+<script>
+// ★ GoogleフォームURLが確定したら SURVEY_URL を1箇所書き換えるだけで全導線に反映
+const SURVEY_URL = 'https://forms.gle/XXXXXXXXXXXXXXXX';
+
+function openSurveyModal() {
+  const navLink = document.getElementById('survey-nav-link');
+  if (navLink) navLink.href = SURVEY_URL;
+  document.getElementById('survey-modal-link').href = SURVEY_URL;
+  document.getElementById('survey-modal').style.display = 'flex';
+}
+function closeSurveyModal() {
+  document.getElementById('survey-modal').style.display = 'none';
+}
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('survey-modal').addEventListener('click', function (e) {
+    if (e.target === this) closeSurveyModal();
+  });
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeSurveyModal();
+});
+</script>
+
 </body>
 </html>
